@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const DatabaseService = require('../config/db')
-const InterestRateController = require('../controllers/InterestRateController');
+const InterestRateController = require('../controllers/interestRateController');
 
 const interestRateController = new InterestRateController(DatabaseService.getConnection());
 router.get('/', interestRateController.getAllInterestRates.bind(interestRateController));
