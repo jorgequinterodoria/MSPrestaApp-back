@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const DatabaseService = require('../config/db')
-const LoanController = require('../controllers/LoanController');
+const LoanController = require('../controllers/loanController');
 
 const loanController = new LoanController(DatabaseService.getConnection());
 

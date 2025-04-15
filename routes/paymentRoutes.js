@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const DatabaseService = require('../config/db')
-const PaymentController = require('../controllers/PaymentController');
+const PaymentController = require('../controllers/paymentController');
 
 const paymentController = new PaymentController(DatabaseService.getConnection());
 
