@@ -13,6 +13,15 @@ class PaymentController {
         }
     }
 
+    async getTotalPaymentsPerMonth(req, res) {
+        try {
+            const result = await this.pool.query('SELECT EXTRACT(MONTH FROM payment_date) AS month, SUM(amount) AS total_amount FROM payments GROUP BY month ORDER BY month');
+            res.json(result);
+        } catch (error) {
+            console.error('Error executing query', error);
+            res.status(500).json({ error: 'Error al cargar el total de pagos por mes', details: error.message });
+        }
+    }
     async getPaymentById(req, res) {
         const paymentId = req.params.id;
         try {

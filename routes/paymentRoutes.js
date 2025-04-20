@@ -6,6 +6,7 @@ const PaymentController = require('../controllers/paymentController');
 const paymentController = new PaymentController(DatabaseService.getConnection());
 
 router.get('/', paymentController.getAllPayments.bind(paymentController));
+router.get('/total', paymentController.getTotalPaymentsPerMonth.bind(paymentController));
 router.get('/:id', paymentController.getPaymentById.bind(paymentController));
 router.post('/', paymentController.createPayment.bind(paymentController));
 router.put('/:id', paymentController.updatePayment.bind(paymentController));

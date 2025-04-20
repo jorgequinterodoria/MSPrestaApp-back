@@ -13,6 +13,28 @@ class LoanController {
         }
     }
 
+    async getTotalLoans(req, res) {
+        try {
+            const result = await this.pool.query('SELECT COUNT(*) AS total FROM loans');
+            const total = result[0].total;
+            res.json({ total });
+        } catch (error) {
+            console.error('Error executing query', error);
+            res.status(500).json({ error: 'Error al cargar el total de préstamos', details: error.message });
+        }
+    }
+    async getTotalAmountLoans(req, res) {
+        try {
+            const result = await this.pool.query('SELECT SUM(principal_amount) AS total_amount FROM loans');
+            const totalAmount = result[0].total_amount;
+            res.json({ total_amount: totalAmount });
+        }
+        catch (error) {
+            console.error('Error executing query', error);
+            res.status(500).json({ error: 'Error al cargar el total de préstamos', details: error.message });
+        }
+    }
+
     async getLoanById(req, res) {
         const loanId = req.params.id;
         try {
