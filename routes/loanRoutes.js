@@ -6,6 +6,7 @@ const LoanController = require('../controllers/loanController');
 const loanController = new LoanController(DatabaseService.getConnection());
 
 router.get('/', loanController.getAllLoans.bind(loanController));
+router.get('/by-current-week', loanController.getLoansOfCurrentWeek.bind(loanController));
 router.get('/:id', loanController.getLoanById.bind(loanController));
 router.post('/', loanController.createLoan.bind(loanController));
 router.put('/:id', loanController.updateLoan.bind(loanController));

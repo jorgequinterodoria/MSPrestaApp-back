@@ -114,6 +114,33 @@ class LoanController {
             res.status(500).json({ error: 'Error al eliminar el préstamo', details: error.message });
         }
     }
+
+    async getLoansOfCurrentWeek(req, res) {
+        try {
+            // Obtener la fecha actual
+            const today = new Date();
+            // Calcular el primer día de la semana (lunes)
+            const firstDay = new Date(today);
+            firstDay.setDate(today.getDate() - today.getDay() + 1);
+            firstDay.setHours(0, 0, 0, 0);
+
+            // Calcular el último día de la semana (domingo)
+            const lastDay = new Date(today);
+            lastDay.setDate(today.getDate() - today.getDay() + 7);
+            lastDay.setHours(23, 59, 59, 999);
+
+            // Consulta SQL para préstamos en el rango de la semana
+            const result = await this.pool.query(
+                `SELECT * FROM loans WHERE start_date BETWEEN $1 AND $2`,
+                [firstDay, lastDay]
+            );
+
+            res.json(result.rows || result);
+        } catch (error) {
+            console.error('Error ejecutando la consulta', error);
+            res.status(500).json({ error: 'Error al cargar los préstamos de la semana', details: error.message });
+        }
+    }
 }
 
 module.exports = LoanController;
