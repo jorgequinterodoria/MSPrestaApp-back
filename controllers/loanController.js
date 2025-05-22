@@ -151,10 +151,14 @@ class LoanController {
             lastDay.setDate(today.getDate() - today.getDay() + 7);
             lastDay.setHours(23, 59, 59, 999);
 
-            // Consulta SQL para préstamos en el rango de la semana
+            // Obtener los días numéricos de la semana (ej: 19, 20, 21...)
+            const firstDayNum = firstDay.getDate();
+            const lastDayNum = lastDay.getDate();
+
+            // Consulta SQL para préstamos en los días de la semana
             const result = await this.pool.query(
                 `SELECT * FROM loans WHERE EXTRACT(DAY FROM start_date) BETWEEN $1 AND $2`,
-                [firstDay, lastDay]
+                [firstDayNum, lastDayNum]
             );
 
             res.json(result.rows || result);
