@@ -153,7 +153,7 @@ class LoanController {
 
             // Consulta SQL para préstamos en el rango de la semana
             const result = await this.pool.query(
-                `SELECT * FROM loans WHERE start_date BETWEEN $1 AND $2`,
+                `SELECT * FROM loans WHERE EXTRACT(DAY FROM start_date) BETWEEN $1 AND $2`,
                 [firstDay, lastDay]
             );
 
