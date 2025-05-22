@@ -155,10 +155,14 @@ class LoanController {
             const firstDayNum = firstDay.getDate();
             const lastDayNum = lastDay.getDate();
 
+            // Convertir a números para asegurar el tipo correcto
+            const firstDayNumInt = parseInt(firstDayNum);
+            const lastDayNumInt = parseInt(lastDayNum);
+
             // Consulta SQL para préstamos en los días de la semana
             const result = await this.pool.query(
                 `SELECT * FROM loans WHERE EXTRACT(DAY FROM start_date) BETWEEN $1 AND $2`,
-                [firstDayNum, lastDayNum]
+                [firstDayNumInt, lastDayNumInt]
             );
 
             res.json(result.rows || result);
